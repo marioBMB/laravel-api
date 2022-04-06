@@ -3,10 +3,15 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+ window.Vue = require('vue');
 
-require('./bootstrap');
+ window.axios = require('axios');
+ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window.Vue = require('vue');
+ window.dayjs = require('dayjs');
+ // dayjs.extend(window.dayjs_plugin_customParseFormat); /* per leggere una data in formato diverso da ISO 8601 */
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -16,10 +21,13 @@ window.Vue = require('vue');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import App from './App.vue';
+import router from './router';
+
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +37,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    render: h => h(App),
+    router
 });

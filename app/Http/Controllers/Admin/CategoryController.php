@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Category;
 use App\Post;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        $categories = Category::all();
+        return view ('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -25,8 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
-        
+        return view ('admin.categories.create');
     }
 
     /**
@@ -37,7 +38,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => ['required', 'unique:categories'],
+        ]);
+
+        $form_data = $request->all();
+        $newCategory = new Category();
+        $newCategory->name = $form_data['name'];
+        $newCategory->slug = $form_data['name'];
+
+        $newCategory->save();
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -46,9 +58,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $spost)
-    {
+    public function show($slug)
+    {   
 
+        return redirect('/posts/category/'.$slug);
+        /*
+        $posts = Post::where('category', $slug);
+        return view('categories.show' , compact('posts'));
+        */
     }
 
     /**
@@ -57,9 +74,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -80,8 +97,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('admin.categories.index');
     }
 }

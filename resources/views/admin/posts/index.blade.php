@@ -16,7 +16,7 @@
         </div>
     <div>
 
-    <div class="input-group">
+    {{-- <div class="input-group">
         <form action="{{route("api.posts.category")}}" method="POST">
             <div class="form-outline">
                 <input type="search" id="category" name='category' class="form-control" />
@@ -26,7 +26,7 @@
                 <i class="fas fa-search"></i>
             </button>
         </form>
-    </div>
+    </div> --}}
 
     <table class="table">
         <thead class='text-center'>
@@ -63,7 +63,7 @@
                 </td>
 
                 <td>
-                    <div class="row">
+                    <div class="row flex-column">
                         <div class="col p-1">
                             <a href="{{route("admin.posts.show", $post->slug)}}">
                                 <button type="button" class="btn btn-primary">

@@ -1,0 +1,51 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import '_variables.scss';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Fontawesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+
+
+.tag-box {
+    display: inline-block;
+    background-color: blue;
+    color: white;
+    border-radius: 8px;
+    padding: 2px 7px;
+    font-size: 0.8rem;
+    margin-right: 1px;
+}
+
+
+.post-content {
+
+    p {
+        font-size: 1.1rem;
+    }
+}
+
+
+label {
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+
+form button[type='submit'].btn.btn-success {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    margin-top: 1rem;
+}
+
+
+input[type='file'].file_selected {
+    color: rgba(0, 0, 0, 0);
+}

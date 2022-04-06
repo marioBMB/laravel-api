@@ -1,13 +1,12 @@
 @extends('layouts.admin')
 
-
 @section('content')
 
     <div class="container">
 
         <div class='post-header row justify-content-between'>
             <div class="col">
-                <h1>Modifica post: {{$post->title}}</h1>
+                <h1>Modifica post</h1>
             </div>
             <div class="col-auto">
                 <a href="{{route('admin.posts.index')}}" class='btn btn-primary'><i class="fa fa-arrow-left" aria-hidden="true"></i> Indietro</a>
@@ -82,11 +81,13 @@
             </div>
             
             <div class="form-group">
-                <label for="image">Immagine</label>
-                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="Inserisci l'url dell'immagine del post">
+                <label for="image">Immagine: </label> ({{ $image_name }})
+                <input type="file" class="form-control {{ ($image_name != ' ')? 'file_selected' : '' }}"  title=" " @error('image') is-invalid @enderror id="image" name="image">
             </div>
+
+            <button type="submit" class="btn btn-success"><strong><i class="fa-solid fa-floppy-disk"></i></strong>  Modifica</button> 
+
             
-            <button type="submit" class="btn btn-success"><strong><i class="fa fa-floppy-o" aria-hidden="true"></i></strong> Modifica</button> 
         </form>
 
         @if ($errors->any())

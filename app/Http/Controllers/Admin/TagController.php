@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Post;
 
-class PostController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        //
     }
 
     /**
@@ -26,7 +25,6 @@ class PostController extends Controller
     public function create()
     {
         //
-        
     }
 
     /**
@@ -46,9 +44,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $spost)
+    public function show($id)
     {
-
+        //
     }
 
     /**
@@ -59,7 +57,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**

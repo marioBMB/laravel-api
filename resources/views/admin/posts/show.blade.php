@@ -3,19 +3,39 @@
 @section('title', 'Boolpress - '.$post->title)
 
 @section('content')
-<div class="container">
+<div class="container col-md-10">
 
     <div class="post-container m-5">
-        {{-- @php if($post->
-            published): @endphp --}}
+
         <div class="post-header row justify-content-between">
             <div class="col-8">
                 <h2>{{$post->title}}</h2>
             </div>
             <div class="col-4">
-                <h6>Creato il: {{$post->created_at}}</h6>
-                <h5>Da: {{$post->user->name}}</h5>
+                <h6><i class="fa-solid fa-clock"></i> {{$post->created_at}}</h6>
+                <h5 class='text-primary'><i class="fa-solid fa-user "></i> {{$post->user->name}}</h5>
             </div>
+        </div>
+
+
+        <div class='post-meta'>
+            
+            <div class="category">
+                Categoria: <strong>{{$post->category? $post->category->name: "-"}}</strong>
+            </div>
+
+            <div class="tags">
+                <i class="fa-solid fa-tags"></i>:
+                
+                @foreach ($post->tags as $tag)
+                    
+                <a href={{'/posts/tags/'.$tag->slug}} class="tag-box">
+                    <strong>{{$tag->name }}</strong>
+                </a> 
+
+                @endforeach
+            </div>
+
         </div>
 
         <div class="post-content my-5">

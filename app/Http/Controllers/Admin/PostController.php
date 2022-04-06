@@ -76,12 +76,12 @@ class PostController extends Controller
         }
 
         $form_data['slug'] = $this->slug($form_data['title']);
+        $newPost = new Post();
 
          /* lo store ha una gestione diversa dall'update: qui devo solo scrivere ex-novo, non cancellare eventualmente qualcosa di preesistente */
         if (isset($form_data['tags'])){
-            $new_post->tags()->sync($form_data['tags']);
+            $newPost->tags()->sync($form_data['tags']);
         }
-        $newPost = new Post();
         $newPost = Post::create($form_data);
 
         return redirect()->route('admin.posts.index');
@@ -95,7 +95,7 @@ class PostController extends Controller
      */
     public function show($post) 
     {   
-        $post = Post::where('slug', $post)->first();
+        $post = Post::where('slug', $post)->with(['category', 'tags'])->first();
         if (!$post){
             abort(404);
         }
@@ -112,7 +112,15 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        $image_name = "";
+
+        if (isset($post->image)){
+            $image_name = str_replace("uploads/", "", $post->image);
+        }
+        else {
+            $post->image = "Nessun file selezionato";
+        }
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'image_name'));
     }
 
     /**
@@ -124,6 +132,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
         $request->validate([
             'title' => "required|string|between:5,255",
             'content' => "required|string",

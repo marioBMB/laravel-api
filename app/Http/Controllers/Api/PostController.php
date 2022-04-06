@@ -11,28 +11,48 @@ class PostController extends Controller
 
     public function index() {
 
-        $posts = Post::all();
+        $posts = Post::with(['category', 'tags'])->get();
         return response()->json($posts);
     }
 
 
-    public function show($id) {
+    public function show($slug) {
 
-        $post = Post::where('id', $id)->get();
+        $post = Post::where("slug", $slug)->with(["category", "tags", "user"])->first();
         return response()->json($post);
     }
 
 
-    public function filter($category=null){
+    public function filterByCategory($categoryName){
 
-        if ($category){
-            $posts = Post::where("category_id", $category)->get();
-        }
-        else {
-            $posts = Post::where("category_id", $request['category'])->get();
-        }
-        return response()->json($posts);
+        $posts = Post::whereHas('category', function($query) use($categoryName) {
+            $query->where('name', $categoryName);
+        });
+        return response()->json($posts->get());
     }
 
+
+    public function filterByTag($tagName){
+
+        $posts = Post::whereHas('tags', function($query) use($tagName) {
+            $query->where('name', $tagName);
+        });
+        return response()->json($posts->first());
+    }
+
+
+    public function filterByTags($tagsSlug){
+
+        if ( str_contains($tagsSlug, "-")){
+            $tags = explode("-", $tagsSlug);
+        }
+        else {
+            $tags = compact('tagsSlug');
+        }
+        $posts = Post::whereHas('tags', function($query) use($tags) {
+            $query->whereIn('name', $tags);
+        });
+        return response()->json($posts->get());
+    }
 
 }

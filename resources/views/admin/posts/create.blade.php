@@ -56,7 +56,7 @@
                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="Inserisci l'url dell'immagine del post">
             </div>
             
-            <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Crea post</button> 
+            <button type="submit" class="btn btn-success"><strong><i class="fa-solid fa-floppy-disk"></i></strong> Crea post</button> 
         </form>
 
         @if ($errors->any())
